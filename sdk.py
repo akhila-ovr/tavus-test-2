@@ -50,3 +50,39 @@ def create_persona(
         return response.json()
     except requests.exceptions.RequestException as e:
         return {"error": str(e), "status_code": getattr(e.response, "status_code", None)}
+
+def create_conversation(
+        api_key: str, 
+        persona_id: str, 
+        conversation_name: str = "Interview User"
+        ):
+    """
+    Creates a new conversation for a given persona using the Tavus API.
+
+    Args:
+        api_key (str): Your Tavus API key.
+        persona_id (str): The ID of the persona for which the conversation is created.
+        conversation_name (str, optional): The name of the conversation. Defaults to "Interview User".
+
+    Returns:
+        dict: Parsed JSON response from the API or an error message.
+    """
+    url = "https://tavusapi.com/v2/conversations"
+    
+    headers = {
+        "Content-Type": "application/json",
+        "x-api-key": api_key,
+    }
+
+    data = {
+        "persona_id": persona_id,
+        "conversation_name": conversation_name,
+    }
+
+    try:
+        response = requests.post(url, headers=headers, json=data)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        return {"error": str(e), "status_code": getattr(e.response, "status_code", None)}
+
