@@ -1,5 +1,5 @@
 import requests
-from typing import Iterable, Optional, List
+from typing import Any, Dict, Iterable, Optional, List
 import time
 
 def create_persona(
@@ -58,6 +58,7 @@ def create_conversation(
         persona_id: str, 
         conversation_name: str = "Interview User",
         document_ids: Optional[Iterable[str]] = None,
+        properties: Optional[Dict[str, Any]] = None
         ):
     """
     Creates a new conversation for a given persona using the Tavus API.
@@ -85,6 +86,9 @@ def create_conversation(
 
     if document_ids:
         data["document_ids"] = list(document_ids)   
+
+    if properties:
+        data["properties"] = properties
 
     try:
         response = requests.post(url, headers=headers, json=data)
