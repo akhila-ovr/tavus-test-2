@@ -29,9 +29,11 @@ def main():
     if persona_id:
         conv_response = sdk.create_conversation(
             api_key=secrets["Tavus_API_Key"],
-            data=conversation,
-            persona_id=persona_id,
-            document_id=document_response.get("document_id"),
+            data=conversation
+            | {
+                "persona_id": persona_id,
+                "document_ids": [document_response.get("document_id")],
+            },
         )
         print("Conversation Response:", conv_response)
 
