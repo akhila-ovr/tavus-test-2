@@ -1,5 +1,5 @@
 {
     "persona_id": "{persona_id}",
     "document_ids": ["{document_id}"],
-    "conversation_name": "Conversation"
+    "conversation_name": "Default Conversation"
 }
