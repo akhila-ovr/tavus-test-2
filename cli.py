@@ -19,11 +19,11 @@ def load_json(folder, name):
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--persona")
-    parser.add_argument("--conversation")
-    parser.add_argument("--document")
-    args = parser.parse_args()
+    parser = argparse.ArgumentParser()  # Define command-line arguments
+    parser.add_argument("--persona")  # Specify the persona to use
+    parser.add_argument("--conversation")  # Specify the conversation to use
+    parser.add_argument("--document")  # Specify the document to use
+    args = parser.parse_args()  # Parse the command-line arguments
 
     persona = load_json(FOLDERS["persona"], args.persona) if args.persona else None
     convo = (
