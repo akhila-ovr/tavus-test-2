@@ -8,13 +8,12 @@ def main():
         secrets = json.load(f)
 
     fashionAdvisor = load_config("personas", "fashionAdvisor")
+    document = load_config("documents", "affectiveVirtualAgents")
+    conversation = load_config("conversations", "conv-test")
 
     document_response = sdk.create_document(
         api_key=secrets["Tavus_API_Key"],
-        data={
-            "document_name": "test-doc-1",
-            "document_url": "https://arxiv.org/pdf/2308.10385.pdf",
-        },
+        data=document,
     )
     print("Document Response:", document_response)
 
@@ -30,12 +29,9 @@ def main():
     if persona_id:
         conv_response = sdk.create_conversation(
             api_key=secrets["Tavus_API_Key"],
-            data={
-                "persona_id": persona_id,
-                # "document_ids": [document_response.get("document_id")],
-                "conversation_name": "Test Conversation 1",
-            },
+            data=conversation,
             persona_id=persona_id,
+            document_id=document_response.get("document_id"),
         )
         print("Conversation Response:", conv_response)
 
