@@ -1,41 +1,39 @@
 import sdk
 import json
-from utils.config_loader import load_config
+from cli import main as cli_main
 
 
 def main():
     with open("secrets.json") as f:
         secrets = json.load(f)
+    api_key = secrets["Tavus_API_Key"]
 
-    fashionAdvisor = load_config("personas", "fashionAdvisor")
-    document = load_config("documents", "affectiveVirtualAgents")
-    conversation = load_config("conversations", "conv-test")
+    persona, conversation, document = cli_main()
+
+    print("Persona:", persona["persona_name"])
+    print("Document:", document["document_name"])
 
     document_response = sdk.create_document(
-        api_key=secrets["Tavus_API_Key"],
+        api_key=api_key,
         data=document,
     )
-    print("Document Response:", document_response)
 
-    sdk.wait_until_document_ready(
-        secrets["Tavus_API_Key"], document_response.get("document_id")
-    )
+    sdk.wait_until_document_ready(api_key, document_response.get("document_id"))
 
-    response = sdk.create_persona(api_key=secrets["Tavus_API_Key"], data=fashionAdvisor)
+    response = sdk.create_persona(api_key=api_key, data=persona)
 
-    print("API Response:", response)
     persona_id = response.get("persona_id")
 
     if persona_id:
         conv_response = sdk.create_conversation(
-            api_key=secrets["Tavus_API_Key"],
+            api_key=api_key,
             data=conversation
             | {
                 "persona_id": persona_id,
                 "document_ids": [document_response.get("document_id")],
             },
         )
-        print("Conversation Response:", conv_response)
+    print("Meeting Link:", conv_response["conversation_url"])
 
 
 if __name__ == "__main__":
