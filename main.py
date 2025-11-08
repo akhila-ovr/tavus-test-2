@@ -13,14 +13,14 @@ def main():
         api_key=secrets["Tavus_API_Key"],
         data={
             "document_name": "test-doc-1",
-            "document_url": "https://arxiv.org/pdf/2308.10385",
+            "document_url": "https://arxiv.org/pdf/2308.10385.pdf",
         },
     )
     print("Document Response:", document_response)
 
-    # sdk.wait_until_document_ready(
-    #     secrets["Tavus_API_Key"], document_response.get("document_id")
-    # )
+    sdk.wait_until_document_ready(
+        secrets["Tavus_API_Key"], document_response.get("document_id")
+    )
 
     response = sdk.create_persona(api_key=secrets["Tavus_API_Key"], data=fashionAdvisor)
 
@@ -35,6 +35,7 @@ def main():
                 # "document_ids": [document_response.get("document_id")],
                 "conversation_name": "Test Conversation 1",
             },
+            persona_id=persona_id,
         )
         print("Conversation Response:", conv_response)
 
