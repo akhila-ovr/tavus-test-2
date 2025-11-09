@@ -14,7 +14,6 @@ A simple Python project that interacts with the [Tavus API](https://docs.tavus.i
 
 ## 🧩 Requirements
 - Python 3.9+
-- `requests` library
 
 Install dependencies:
 ```bash
