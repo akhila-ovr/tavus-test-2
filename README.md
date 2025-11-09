@@ -17,4 +17,14 @@ A simple Python project that interacts with the [Tavus API](https://docs.tavus.i
 
 Install dependencies:
 ```bash
+# create venv
+python -m venv .venv
+
+# activate
+source .venv/Scripts/activate
+
 pip install -r requirements.txt
+
+#run example 
+
+python main.py --persona fashionAdvisor --conversation defaultConversation --document testDoc
